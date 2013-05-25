@@ -1,6 +1,9 @@
 django-redis-sessions
 =======================
-Redis database backend for your sessions
+
+Based on django-redis-sessions by martinrusev.
+
+Redis will store decoded session data and django will use default session engine method.
 
 ------------
 Installation
