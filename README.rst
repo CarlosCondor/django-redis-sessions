@@ -1,4 +1,4 @@
-django-redis-sessions
+django-redis-sessions-decoded
 =======================
 
 Based on django-redis-sessions by martinrusev.
@@ -29,9 +29,6 @@ For Django < 1.4 run ``pip install django-redis-sessions==0.3``
 
     SESSION_REDIS_UNIX_DOMAIN_SOCKET_PATH = '/var/run/redis/redis.sock'
 
-4. That's it::
-
-See: `django-redis-sessions <http://pypi.python.org/pypi/django-redis-sessions>`_ on pypi
 
 5. Tests::
 
