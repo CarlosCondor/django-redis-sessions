@@ -93,17 +93,22 @@ class SessionStore(SessionBase):
             raise
 
         data = self.encode(self._get_session(no_load=must_create))
+        formated_cookie = pickle.loads(base64.decodestring(data).split(":",1)[1])
+        for k in formated_cookie:
+            if type(formated_cookie[k]) is long:
+                formated_cookie[k] = int(formated_cookie[k])
+        formated_cookie = json.dumps(formated_cookie)
         if redis.VERSION[0] >= 2:
             self.server.setex(
                 self.get_real_stored_key(self._get_or_create_session_key()),
                 self.get_expiry_age(),
-                json.dumps(pickle.loads(base64.decodestring(data).split(":",1)[1]))
+                formated_cookie
             )
             
         else:
             self.server.set(
                 self.get_real_stored_key(self._get_or_create_session_key()),
-                json.dumps(pickle.loads(base64.decodestring(data).split(":",1)[1]))
+                formated_cookie
             )
             self.server.expire(
                 self.get_real_stored_key(self._get_or_create_session_key()),
