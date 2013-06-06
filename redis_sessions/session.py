@@ -1,4 +1,5 @@
 import redis
+import json
 try:
     from django.utils.encoding import force_unicode
 except ImportError:  # Python 3.*
@@ -96,12 +97,13 @@ class SessionStore(SessionBase):
             self.server.setex(
                 self.get_real_stored_key(self._get_or_create_session_key()),
                 self.get_expiry_age(),
-                pickle.loads(base64.decodestring(data).split(":",1)[1])
+                json.dumps(pickle.loads(base64.decodestring(data).split(":",1)[1]))
             )
+            
         else:
             self.server.set(
                 self.get_real_stored_key(self._get_or_create_session_key()),
-                pickle.loads(base64.decodestring(data).split(":",1)[1])
+                json.dumps(pickle.loads(base64.decodestring(data).split(":",1)[1]))
             )
             self.server.expire(
                 self.get_real_stored_key(self._get_or_create_session_key()),
